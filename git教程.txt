@@ -1,0 +1,19 @@
+下载：先下载git，然后下载tortoiesGit，两个都是疯狂next，需要切换中文版本的下载中文插件，安装tortoiesGit的时候，要设置一下，需要把git的bin文件夹路径写入。
+
+使用：
+1、先是git clone 克隆一个项目路径，自创的项目需要先去github上新建一个工程，然后拷贝工程的http链接，最后git clone一个项目。
+2、下一步是切换分支，一般项目的master是生产环境的路径，除了项目经理一般不允许操作master分支。所以我们需要切换到dev（测试）分支，tortoiesGit==》switch/checkout，在branch中切换分支，然后点击ok即可，如果是初始项目，就选择commit和create new branch 命名为dev，最后点击ok即可。
+3、然后就是项目的开发了，开发中拉代码就用pull，提交代码要分两部完成，一步是git commit=》dev（提交到本地仓库），然后push（提交到github仓库）
+4、这里说一下解决冲突的方法，一般没有冲突的话pull是不会报错的，有冲突的时候，pull是会报错的。pull中的报错代码中上面一句话是让你先提交本地代码到本地仓库中，所以你先要commit一下，这样就保存了你的本地代码，然后在pull拉一下github的代码，还是会提示你报错，但这个时候你不用管，直接点ok(忘记是不是ok了，反正就是关闭对话框的按钮吧)，就会弹出一个框，问你是不是要展示改变的代码，点击ok就可以看到可视化代码对比界面，右边是你仓库的本地代码，左边是github上的代码，下面是合并之后的代码，红色的是冲突的代码，然后选择你觉得要覆盖的代码区域，右键选择使用这块代码。冲突解决之后，保存，标记为解决。最后push一下，就ok了。
+5、说一下如何去除每次都要输入账号密码的问题。在c盘中user中找到自己的用户，在目录下找到.gitconfig文件，然后用记事本打开，最后面加上代码：
+
+[credential] 
+     helper = store
+保存即可，保存的效果如下：
+[user]
+	name = Alan
+	email = alan0555@qq.com
+[http]
+	proxy = 
+[credential] 
+     helper = store
