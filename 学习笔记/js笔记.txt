@@ -1,0 +1,18 @@
+1、在数组中查找某个对象是否存在(es6)：
+stu.find((element) => (element.name == '李四'))
+存在则返回当前元素，不存在则返回undefind
+
+2、f7的图片懒加载：
+<img :data-src=xxx  class="lazy">
+
+3、No parser and no file path given, couldn't infer a parser.缺失解析器
+解决方法：npm i prettier@~1.12.0
+
+4、使用less：
+npm install less less-loader --save-dev
+
+5、anywhere使用：
+npm  install anywhere -g
+anywhere
+
+6、

@@ -1,0 +1,115 @@
+framework7是基于移动端的一套ui框架，结合vue效果不错（但也有一些问题）
+
+目前学习的是2.3.0版本的framework7，官方文档是英文版本的，地址是：http://framework7.io/vue/vue-component-extensions.html
+
+首先搭建项目：
+1、官方推荐的f7+vue有一套模板，地址是：https://github.com/framework7io/framework7-template-vue-webpack
+
+2、main.js使用的时候，引入f7的npm包方法如下：
+1）import Framework7 from 'framework7/dist/framework7.esm.bundle.js';
+   import Framework7Vue from 'framework7-vue/dist/framework7-vue.esm.bundle.js';
+   不能直接使用import Framework7 from 'framework7'，如果这样写了，f7的组件都必须先在.vue文件里面import引入，然后使用，上面的方法是可以直接使用的。
+2）引入f7的css文件，import Framework7Styles from '../static/framework7.css';
+这个css文件最好从f7的npm包里面扣出来，放在static文件夹下，方便自己修改，然后使用，不然你这次修改了，下次别人使用这个项目，npm install，是从npm上拉下来的原始f7的css。
+3）注册f7的时候使用Vue.use(Framework7Vue,Framework7)。不然会报错
+4）如果想全局使用f7的方法，可以将f7的方法移植到window上（早些版本的f7对象就是全局变量）。
+移植方法： !window.f7&&(window.f7=Vue.prototype.$f7);  
+5）这个版本（2.3.0）的f7对象、调用方法和旧版本的不一样，比如说alert方法是存在于dialog上面的。
+使用：f7.dialog.alert([内容],[title提示],[callback])。如果不明白可以直接查看源码。
+旧版本：f7.alert([内容],[title提示],[callback])
+6）f7的参数配置，比如说alert的标题，按钮的信息等等。2.3.0的配置是在创建vue对象的时候写入的。
+这里需要注意一点，需要将创建的vue对象给保存起来。
+如下：var app= new Vue({
+  el: '#app',
+  framework7: {
+    id: 'io.framework7.testapp', // App bundle ID
+    name: 'Framework7', // App name
+    theme: 'auto', // Automatic theme detection
+    // tapHold: true,//长按事件是否启用 ---手机长按事件无法配合剪切板复制功能，不知道为啥
+    touch: {
+      tapHold: true,//enable tap hold events
+    },
+    // f7  2.3.0的配置参数都是写在dialog里面
+    dialog:{
+      title:'提示',
+      buttonOk:'确定',//模态框的确认按钮文本
+      buttonCancel: '取消',//模态框取消按钮的文本
+    },
+  },
+  store,
+  render: h => h(App)
+});
+
+
+//下面全部都是使用的笔记
+3、懒加载
+<img :data-src="" class="lazy">
+
+4、长按事件：
+长按事件需要在framework7创建时配置一下启用状态，不然无法启用。framework7：{touch: {tapHold: true,}}
+使用方法：这个需要手动绑定到元素上，this.$$([选择器]).on('taphold',function(){})
+但这儿有一个bug：
+当我们想实现长按复制的时候，使用的插件是vue-clipboard.js
+移动端并不能实现这效果，但是pc端却可以实现。具体原因还不清楚。
+
+5、待续未完。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
