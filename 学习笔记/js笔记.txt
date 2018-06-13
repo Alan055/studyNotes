@@ -15,4 +15,90 @@ npm install less less-loader --save-dev
 npm  install anywhere -g
 anywhere
 
-6、
+6、纯数组的深复制：push pop concat都可以
+   对象的深复制：Object.assgin({},obj)
+   对象数组的深复制：JSON.parse(JSON.stringify(obj))
+
+7、axios的表单请求：
+axios({
+            method:"post",
+            url:'xxx',
+//            headers:{
+//              'Content-type': 'application/x-www-form-urlencoded'//这就话千万别加
+//            },
+            data:obj,
+            transformRequest: [function (data) {
+              let ret = ''
+              for (let it in data) {
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+              }
+              return ret
+            }],
+          }).then()
+
+8、tabindex=0，可以给元素增加焦点，但是在移动端无法实现这个效果
+
+9、鼠标移出事件使用mouseleave，而不是mouseover
+
+10、animation  只能用于元素的显示与隐藏瞬间，v-if不能完成消失时的动画
+需要给两个状态，一个状态控制是否加载这块组件（v-if），另一个控制动画的正反（class），
+也就是说这块组件加载了就不注销了
+
+11、for...of...
+for(let v of arr){}这里面可以使用return break continue 但是没办法拿到下标
+所以要在外面写一个let i=0，然后再for循环里面自家；
+需要注意的是  forEach也是无法跳出去的  而且还需要提前检查数组是否为空，for..of则不需要
+
+12、iview 下拉框显示隐藏  过度效果参考文件夹
+现在main.js里面引入css，然后就可以在页面上调用这个组件了
+
+13、滚动条样式：
+div::-webkit-scrollbar {
+    width: 6px;
+    height: 4px;
+}
+div::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,.2);
+    background: #5bcd78;
+}
+div::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,.2);
+    border-radius: 0;
+    background: #edeff1;
+    border-radius: 15px;
+}
+
+14、横向滚动条事件
+//必须用id ！！！！！！！！！！
+let outDiv = document.getElementById('scrollPhoto');
+        outDiv.onwheel = function(event){
+          //禁止事件默认行为（此处禁止鼠标滚轮行为关联到"屏幕滚动条上下移动"行为）
+          event.preventDefault();
+          //设置鼠标滚轮滚动时屏幕滚动条的移动步长
+          let step = 50;
+          if(event.deltaY < 0){
+            //向上滚动鼠标滚轮，屏幕滚动条左移
+            this.scrollLeft -= step;
+          } else {
+            //向下滚动鼠标滚轮，屏幕滚动条右移
+            this.scrollLeft += step;
+          }
+        }
+
+15、
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
