@@ -1,0 +1,100 @@
+﻿聊天室页面开发
+难点：
+1、ctrl+enter和enter键盘事件如何区分开
+2、滚动条在最下面，初始化的时候在最小面，
+当在中间的时候，数据更新不改变滚动条到底部
+当发送消息的时候将滚动条放置底部
+3、websocket	
+
+
+
+实现：
+1、区分ctrl+enter和enter主要是记住ctrl的状态
+因为keycode的值只有一个，当我们按着ctrl再按下enter的时候，会触发keycode从17转成了13，
+从计算机层面看相当于将ctrl收起，再按下enter，然后再按下ctrl的一个瞬间过程，
+所以我们应该记住ctrl被按下的状态，并且给这个状态一个延迟时间100ms。
+//ctrl按下时
+this.ctrlIsDown = true;
+//ctrl收起时
+ctrlKeyup() {
+	setTimeout(function () {
+		this.ctrlIsDown = false;
+	}.bind(this), 100)
+},
+//enter事件谈起时
+//不提交：当输入字符为空的时候，当ctrl被按下（true）的时候
+if (!text || this.ctrlIsDown)	return
+//输入框换行事件，即ctrl+enter事件
+//输入框的换行事件
+newline() {
+	this.message += '\n';
+	return false
+},
+
+2、滚动条在最底部，当滚动条手动设置不在最底部的时候，不改变滚动条
+这个需要监听数据模板的改变，(按道理来说，应该还需要排序的)
+所以这个是监听事件，我们应该放在watch里面--
+！！！这里只能用dom去读取元素的滚动条，所以必须加上id
+watch: {
+	//监听数据更新，数据更新的时候，一直让滚动条在最下面
+	//判断滚动条是否在最小面的方法：el.height===el.scrollHeight-el.scrollTop
+	data: function () {
+		//当数据更新的时候  去查看更新之前滚动条是否在最小面，
+		//在的话就将数据更新之后的滚动条也放在最下面
+		//否则就不动滚动条
+		let ul = document.getElementById('chatRoomScroll')
+		if (!this.init || ul.clientHeight === (ul.scrollHeight - ul.scrollTop)) {
+			// 滚动条初始化结束
+			this.init = true
+			//在dom更新之后去操作滚动条，不然是拿不到dom更新修改后的滚动条长度
+			this.$nextTick(function () {
+				ul.scrollTop = ul.scrollHeight
+			})
+		}
+	}
+},
+
+3、websocket实例，并发送接收数据
+这里有个很大问题，就是如果后台用了第三方插件，比如说是中间件的话，
+前端也必须使用这个中间件，不然这个真没办法去实现。
+//这里我们后端使用的是socket.io.js和moment.js
+所以我们在index.html下用<script>来引入这两个js，socket在前面
+然后是实例化socket
+//websocket持久链接
+socketInit() {
+  let that=this;
+  //这里的链接请求按道理说只能是ws，不能是http，但是在这个中间件好像是可以http的
+  this.websocket= io.connect(location.origin.replace('http', 'ws')+'/message/chat?sessionId='+getCookie("sso_session_uid"));
+
+	this.websocket.on('connect', function() {
+		console.log("成功链接")
+	});
+
+	this.websocket.on('message', function (data) {
+		//处理数据结构
+		data.type=2//2代表父级传的，不是系统消息
+		data.time=tranlateDate(data.createTime)
+    data.name=that.receiveName;//接收到的消息  名字都是叫游客
+		that.receive(data)
+	});
+	this.websocket.on('notice', function(data) {
+		//处理数据结构
+		let obj={
+			title:data.title,
+			text:data.content,
+			time:data.time,
+			type:3,//3代表系统消息
+		}
+		that.receive(obj)
+	});
+	this.websocket.on('disconnect', function() {
+		this.close=true
+	});
+},
+
+//数据发送
+this.websocket.emit('message',obj)
+
+
+
+

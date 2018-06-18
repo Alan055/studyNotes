@@ -48,6 +48,7 @@ axios({
 for(let v of arr){}这里面可以使用return break continue 但是没办法拿到下标
 所以要在外面写一个let i=0，然后再for循环里面自家；
 需要注意的是  forEach也是无法跳出去的  而且还需要提前检查数组是否为空，for..of则不需要
+或者用这种方法：for (let [v, i] of new Map(arr.map((v, i) => [v, i]))) {}
 
 12、iview 下拉框显示隐藏  过度效果参考文件夹
 现在main.js里面引入css，然后就可以在页面上调用这个组件了
@@ -86,12 +87,29 @@ let outDiv = document.getElementById('scrollPhoto');
           }
         }
 
-15、
+15、return：一般用于返回为无函数结果 
+    return false：一般用于阻止默认行为
+    return true：一般用于执行默认行为
 
+16、修饰符
+<!-- 即元素自身触发的事件先在此处处理，然后才交由内部元素进行处理 -->
+<div v-on:click.capture="doThis">...</div>
+<!-- 即事件不是从内部元素触发的 -->
+<div v-on:click.self="doThat">...</div>
+-----------vue 2.5.0新增的
+<!-- 有且只有 Ctrl 被按下的时候才触发 -->
+<button @click.ctrl.exact="onCtrlClick">A</button>
 
+17、更新模块包 npm install xxx@latest
 
+18、字符串补全功能：padStart从前里面，padEnd从尾部补全
+(xxx+'').padStart(5,'a')
+(xxx+'')是为了保证里面的一定是字符串，不然会报错，5是最小长度，a是补全的字符
 
-
+19、css强制换行：
+如果你连续的英文之间没用空格，那么它会以为是一个单词，就不会换行
+word-break: break-all;
+word-wrap: break-word;
 
 
 
