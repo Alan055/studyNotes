@@ -111,7 +111,9 @@ let outDiv = document.getElementById('scrollPhoto');
 word-break: break-all;
 word-wrap: break-word;
 
-
+20、当修改元素显示与隐藏（v-if）状态的时候，想要拿到这个元素的某些值
+比如说滚动条高度，元素等等，就要等到元素已经渲染到dom上才行
+$this.nextTick(function(){xxx})，就是等到元素渲染的时候执行这段话
 
 
 
