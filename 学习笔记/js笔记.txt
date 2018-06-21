@@ -40,7 +40,8 @@ axios({
 
 9、鼠标移出事件使用mouseleave，而不是mouseover
 
-10、animation  只能用于元素的显示与隐藏瞬间，v-if不能完成消失时的动画
+10、animation  animation:xxx 0.2s linear alternate;
+只能用于元素的显示与隐藏瞬间，v-if不能完成消失时的动画
 需要给两个状态，一个状态控制是否加载这块组件（v-if），另一个控制动画的正反（class），
 也就是说这块组件加载了就不注销了
 
@@ -114,6 +115,10 @@ word-wrap: break-word;
 20、当修改元素显示与隐藏（v-if）状态的时候，想要拿到这个元素的某些值
 比如说滚动条高度，元素等等，就要等到元素已经渲染到dom上才行
 $this.nextTick(function(){xxx})，就是等到元素渲染的时候执行这段话
+
+21、vue获取ref
+ref属性写在组件标签上时，this.$ref.xxx拿到的是对应组件里面export返回的整个对象
+ref属性写在普通标签上时，this.$ref.xxx拿到的是对应标签的dom节点，类似于jq一样
 
 
 

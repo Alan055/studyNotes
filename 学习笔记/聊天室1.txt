@@ -65,11 +65,15 @@ socketInit() {
   let that=this;
   //这里的链接请求按道理说只能是ws，不能是http，但是在这个中间件好像是可以http的
   this.websocket= io.connect(location.origin.replace('http', 'ws')+'/message/chat?sessionId='+getCookie("sso_session_uid"));
-
+	//这里连接会有问题，失败的时候会无限发链接请求，占用内存极大，所以需要保护一下
+	//链接不成功就断开链接
 	this.websocket.on('connect', function() {
 		console.log("成功链接")
 	});
-
+	this.websocket.on('connect_error', function () {
+		console.log("链接错误")
+		that.websocket.disconnect()
+	});
 	this.websocket.on('message', function (data) {
 		//处理数据结构
 		data.type=2//2代表父级传的，不是系统消息
