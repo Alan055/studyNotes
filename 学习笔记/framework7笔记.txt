@@ -62,6 +62,12 @@ let notice=f7.addNotification({
 //手动关闭通知框
 f7.closeNotification(notice)
 
+6、f7弹出框里面写输入框
+f7.prompt('','数量',function (count) {}
+--第一个参数是主题，然后这个弹窗出来就会有一个标题，所以不要这个标题
+--第二个参数是输入框前面的label
+
+
 
 
 

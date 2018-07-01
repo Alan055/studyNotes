@@ -1,5 +1,5 @@
 1、在数组中查找某个对象是否存在(es6)：
-stu.find((element) => (element.name == '李四'))
+stu.find((element) => (element.name == '李四'))------这里面是（）不是{}，如果是{}，里面要加return
 存在则返回当前元素，不存在则返回undefind
 
 2、f7的图片懒加载：
