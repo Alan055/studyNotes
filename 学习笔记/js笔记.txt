@@ -155,4 +155,16 @@ slider.on({
 25、textarea标签的改变事件
 @input=xxx()
 
+26、使用脚手架搭建项目
+vue init webpack-simple project-name   开发中起项目不需要预先编译
+
+27、nginx不能转发https开头的网站
+
+28、less放在main.js里面有时候是不能解析的
+必须在webpack里面配置less的编译器，在.vue外面的文件也可以解析less
+一般建议放在app.vue里面
+
+29、在webpack里面启动eslint  有可能会导致编译失败
+尽量不要使用eslint去打包项目
+
 
