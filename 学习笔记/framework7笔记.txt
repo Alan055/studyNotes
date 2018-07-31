@@ -67,7 +67,8 @@ f7.prompt('','数量',function (count) {}
 --第一个参数是主题，然后这个弹窗出来就会有一个标题，所以不要这个标题
 --第二个参数是输入框前面的label
 
-
+7、路由跳转
+f7.views.main.router.load({url: '/lottery/buy#' + v})
 
 
 
