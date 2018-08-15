@@ -70,8 +70,7 @@ f7.prompt('','数量',function (count) {}
 7、路由跳转
 f7.views.main.router.load({url: '/lottery/buy#' + v})
 
-
-
+8、a标签跳转  必须加class="external"
 
 
 
