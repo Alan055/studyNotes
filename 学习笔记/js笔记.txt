@@ -121,6 +121,7 @@ ref属性写在组件标签上时，this.$ref.xxx拿到的是对应组件里面export返回的整个对象
 ref属性写在普通标签上时，this.$ref.xxx拿到的是对应标签的dom节点，类似于jq一样
 
 22、moment.js：
+moment(v).format("YYYY-MM-DD  HH:mm:ss")
 处理时间的轻量级插件，计算啊，加时间减时间等  不需要.getTime()了
 
 23、边框的阴影
@@ -176,4 +177,11 @@ vue init webpack-simple project-name   开发中起项目不需要预先编译
     height: 3px;
     background-color: #F53B4A;
     z-index: 10;
+
+31、
+
+
+
+
+
 
