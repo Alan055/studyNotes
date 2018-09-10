@@ -178,10 +178,14 @@ vue init webpack-simple project-name   开发中起项目不需要预先编译
     background-color: #F53B4A;
     z-index: 10;
 
-31、
+31、过渡效果的实现
+点击的时候 增加过渡效果 transition
+.css({'transition':'0.3s','left':-this.leftBank*278})// 用css去控制
 
+32、判断数组
+Array.isArray()   ie8不兼容
 
-
-
+33、改变input的焦点位置
+$('.rechargeInfo .rechargeInput')[0].setSelectionRange(index,index)
 
 
