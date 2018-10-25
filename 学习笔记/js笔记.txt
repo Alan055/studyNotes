@@ -188,4 +188,13 @@ Array.isArray()   ie8不兼容
 33、改变input的焦点位置
 $('.rechargeInfo .rechargeInput')[0].setSelectionRange(index,index)
 
+34、iview兼容ie11  适用于iview3.01
+npm install --save-dev babel-polyfill
+webpack.config.js  里面要在entry.vendor添加babel-polyfill
 
+35、检查字符串出现的次数  a.split('x').length-1
+
+36、// input的全局样式 解决搜狗浏览器input自带的键盘
+input::-webkit-input-safebox-button{
+  display: none;
+}
