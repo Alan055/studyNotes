@@ -1,0 +1,34 @@
+（1）、Function
+1、rest 
+rest代替arguments，arguments是类数组对象，但是 rest是正在的数组对象。
+使用方法：function add(...values) {}   // values就是rest的一个数组对象
+注意：...values后面不能再有参数
+2、name
+返回函数的名字
+3、双引号绑定 
+this::fn(xxx)  === fn.bind(this,xxx)
+
+（2）、Array
+1、Array.from（arr） 
+将类数组转化为数组的方法，类数组：arguments，jq选择器等
+2、Array.of（1,2,3）   // [1,2,3] 
+将一组元素转化为数组
+3、arr.copyWithin（target，[start]，[end]）
+将arr从target开始替换，替换的内容是arr的start位置到end位置 （不包括end位置）
+[1, 2, 3, 4, 5].copyWithin(0,2,4)  // [3, 4, 3, 4, 5]
+4、arr.findIndex（）
+可以返回满足条件的数组的下标，和find一样使用   没有返回-1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
