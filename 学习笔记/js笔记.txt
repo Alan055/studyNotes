@@ -198,3 +198,38 @@ webpack.config.js  里面要在entry.vendor添加babel-polyfill
 input::-webkit-input-safebox-button{
   display: none;
 }
+
+
+37、h5设置rem布局
+<script>
+    (function (doc, win) {
+      debugger
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          docEl.style.fontSize = (clientWidth > 750 ? 100 : 100 * (clientWidth / 750)) + 'px';
+        };
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+  </script>
+
+38、vue-cli3中设置全局less变量
+cmd运行: vue add style-resources-loader
+vue.config.js中写入：
+const path = require('path')
+module.exports = {
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'less',
+      patterns: [
+        path.resolve(__dirname, "src/css/global.less")// 全局样式目录
+      ]
+    }
+  }
+}
+
+
