@@ -1,11 +1,11 @@
 （1）、Function
 1、rest 
-rest代替arguments，arguments是类数组对象，但是 rest是正在的数组对象。
+rest代替arguments，arguments是类数组对象，但是 rest是正常的数组对象。
 使用方法：function add(...values) {}   // values就是rest的一个数组对象
 注意：...values后面不能再有参数
 2、name
 返回函数的名字
-3、双引号绑定 
+3、双引号绑定 // 目前浏览器还不适应
 this::fn(xxx)  === fn.bind(this,xxx)
 
 （2）、Array
@@ -18,8 +18,93 @@ this::fn(xxx)  === fn.bind(this,xxx)
 [1, 2, 3, 4, 5].copyWithin(0,2,4)  // [3, 4, 3, 4, 5]
 4、arr.findIndex（）
 可以返回满足条件的数组的下标，和find一样使用   没有返回-1
+5、arr.fill(target,[start],[end])
+可以填充数组，会将arr中start开始到end（不包含）的元素替换成target 会改变arr的值
+[1,2,3].fill(7,1,2)  === [1,7,3]
+6、keys(),values(),entries()三个用于for...of循环
+for(let i of [1,2].keys()){//i就是数组的元素小标}
+for(let v of [1,2].values()){//v就是数组的元素，其实这个values可以省略}
+for(let [i,v] of [1,2].entries()){//i就是数组的小标,v就是数组的元素}
+7、arr.includes()
+用法和str.includes()一样
+8、flat()和flatMap() // 目前谷歌浏览器还不支持这个方法
+arr.flat(n)将数组将n个维度，参数设置Infinity可以变成一维
+9、...运算符
+const [a, ...b] = [1, 2, 3]; // b = [2,3]
+
+// Array总结：
+数据for...of循环使用for(let v of [1,2].values()){}
+查询数据是否存在某个元素 使用arr.includes()方法
+查询数据存在于数组的某个位置 使用arr.findIndex()方法
+
+（3）、Object
+1、简写：只是简写了key值
+a={x:1}   let b = {a}   // let b = {a:{x:1}}
+2、Object.is(x,y) // 同值相等的判断
+用来判断x,y是否相等，可以解决isNaN!==isNaN的问题
+3、Object.assign(target,obj1) // 这个是浅复制  只会改变target的值，如果想要对象深复制  target改为{}
+将obj1的每个元素和对应的值隐射到target中，并更新target中同key的值
+如果是两个数组，会将元素的下标当成key值，一一替换 Object.assign([1, 2, 3], [4, 5]) = [4,5,3]
+4、对象遍历的方法
+for...in  会遍历对象继承的属性 不会遍历Symbol属性
+for(let key of Object.keys(obj)){} 不会遍历继承的属性和Symbol属性
+大部分使用后面这种方法
+5、super关键字
+和this一样使用，只是这个super指向的是当前对象的原型对象
+6、keys(),values(),entries()三个用于for...of循环
+用法和上面数组的相同
+9、...运算符  // 限制条件同Function一样
+const {a, ...b} = {a:1,b:2,c:3}; // b = {b:2,c:3}
+let z = {a:1,b:2}   let x = {...z} // x = {a:1,b:2} 类似Object.assign()
+还可以写成运算符 const obj = {...(x > 1 ? {a: 1} : {})};
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+h5设置rem布局
+<script>
+    (function (doc, win) {
+      debugger
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          docEl.style.fontSize = (clientWidth > 750 ? 100 : 100 * (clientWidth / 750)) + 'px';
+        };
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+  </script>
+
+vue-cli3中设置全局less变量
+
+cmd运行: vue add style-resources-loader
+vue.config.js中写入：
+const path = require('path')
+module.exports = {
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'less',
+      patterns: [
+        path.resolve(__dirname, "src/css/global.less")// 全局样式目录
+      ]
+    }
+  }
+}
 
 
 
