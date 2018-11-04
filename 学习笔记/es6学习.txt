@@ -53,10 +53,105 @@ for(let key of Object.keys(obj)){} 不会遍历继承的属性和Symbol属性
 和this一样使用，只是这个super指向的是当前对象的原型对象
 6、keys(),values(),entries()三个用于for...of循环
 用法和上面数组的相同
-9、...运算符  // 限制条件同Function一样
+7、...运算符  // 限制条件同Function一样
 const {a, ...b} = {a:1,b:2,c:3}; // b = {b:2,c:3}
 let z = {a:1,b:2}   let x = {...z} // x = {a:1,b:2} 类似Object.assign()
 还可以写成运算符 const obj = {...(x > 1 ? {a: 1} : {})};
+
+
+（4）、Set和Map的数据结构
+1、Set是类数组对象，特点是里面的数组是唯一值，不可重复的，如果有重复的会自动去重  --[...new Set(array)]
+所以我们可以用这个来实现去重的功能。const set = new Set([1,2,2])    [...set]// [1,2]
+2、类数组对象的长度不能用length，只能用size
+set.size = [...set].length
+3、类数组方法 add  // 和push类似
+set.add(4) === [...set].push(4)
+4、set.delete(x) 返回一个布尔值  表示是否删除 
+5、set.has(x) 返回一个布尔值   表示是存在这个值 类似于includes()  一般用于if（set.has(x)）判断
+6、set.clear() 请给所有的成员   没有返回值 此时set是一个空的类数组
+7、遍历 同样提供了keys(),values().entries()三个遍历方法
+但是这里特别注意  Set对象的key值和value值是相同的   可以说是没有key值的
+8、并集、交集，差集
+set = new Set([...a, ...b]); // 并集
+set = new Set([...a].filter(x => b.has(x))); // 交集
+set = new Set([...a].filter(x => !b.has(x))); // 差集
+9、特别注意  目前没有直接去改变set对象中某个值的方法，只能通过间接的方法
+就是先转换成数组  然后操作数组
+10、Map对象 // 类对象
+解决Object只能是字符串作为key值的限制，Map对象的key值key可以是某个对象
+11、属性方法
+m.set({a:1},"content") // 写入一个属性和其对应的值
+m.get({a:1}) // 获取一个属性对应的值
+m.has({a:1}) // 返回布尔值   是否存在某个属性
+m.delete({a:1}) // 删除某个属性的和其对应的值
+m.size() // 返回m中有多少个属性
+m.clear() // 清楚所以的成员
+12、注意，只有对同一个对象的引用，Map 结构才将其视为同一个键。这一点要非常小心。
+map.set(['a'], 555);
+map.get(['a']) // undefined
+// 原因是两个['a']虽然上看着是相同的，但是在内存中的地址却是不同的 所以是两个不同的key值
+13、遍历器
+同样拥有keys(),values(),entries(),使用方法和Object相同
+14、map和jsoon
+jsonToStrMap('{"yes": true, "no": false}') // Map {'yes' => true, 'no' => false}
+jsonToMap('[[true,7],[{"foo":3},["abc"]]]') // Map {true => 7, Object {foo: 3} => ['abc']}
+
+（5）、WeakSet对象：结构和Set类似
+1、WeakSet只能存放对象
+ws = new WeakSet([[1, 2], [3, 4]]) // WeakSet {[1, 2], [3, 4]}
+ws = new WeakSet([3, 4]); // 报错
+2、三个方法
+ws.add(obj)
+ws.has(obj)
+ws.delete(obj)
+3、没有size属性   也不能遍历 // 不能遍历的原因是WeakSet对象是若引用，成员随时可能消失
+
+（6）、WeakMap对象  结构和Map类似
+1、WeakMap的key值只能是对象 不能是其他的值
+2、同样有set get 等方法
+3、不能遍历  原因和WeakSet相同
+
+（7）、Class基本用法
+1、语法
+class Point {  // ...}   // 里面的方法不要用逗号隔开
+2、class里面定义的方法  都是不可枚举的   属于内部属性和方法
+class Point {toString(){}}  // Object.keys(Point.prototype)===[]
+3、constructor方法
+constructor方法是类的默认方法，通过new命令实例化时，会自动调用这个方法
+除了constructor方法之外的方法  都会存在于其原型上
+4、class也可以写成表达式的形式
+const MyClass = class Me {  // 使用： let xx = new MyClass()   而不是me
+  getClassName() {
+    return Me.name;
+  }
+};
+这里相当于在class里面创建了一个方法me   如果这个me没有用到  就可以省略掉
+5、不存在变量声明提前
+es5中构造函数都是以function的形式来写的   由于function是可以声明提前的
+但是在es6中  使用class来创建构造函数的时候   是无法声明提前的
+6、拥有set和get方法
+7、静态方法  static
+在一个创建一个方法时  前面添加static  那么这么方法就不会被实例继承
+
+
+（8）、async函数 --异步
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
