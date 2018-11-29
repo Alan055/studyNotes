@@ -1,0 +1,235 @@
+﻿1、在数组中查找某个对象是否存在(es6)：
+stu.find((element) => (element.name == '李四'))------这里面是（）不是{}，如果是{}，里面要加return
+存在则返回当前元素，不存在则返回undefind
+
+2、f7的图片懒加载：
+<img :data-src=xxx  class="lazy">
+
+3、No parser and no file path given, couldn't infer a parser.缺失解析器
+解决方法：npm i prettier@~1.12.0
+
+4、使用less：
+npm install less less-loader --save-dev
+
+5、anywhere使用：
+npm  install anywhere -g
+anywhere
+
+6、纯数组的深复制：push pop concat都可以
+   对象的深复制：Object.assgin({},obj)
+   对象数组的深复制：JSON.parse(JSON.stringify(obj))
+
+7、axios的表单请求：
+axios({
+            method:"post",
+            url:'xxx',
+//            headers:{
+//              'Content-type': 'application/x-www-form-urlencoded'//这就话千万别加
+//            },
+            data:obj,
+            transformRequest: [function (data) {
+              let ret = ''
+              for (let it in data) {
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+              }
+              return ret
+            }],
+          }).then()
+
+8、tabindex=0，可以给元素增加焦点，但是在移动端无法实现这个效果
+
+9、鼠标移出事件使用mouseleave，而不是mouseover
+
+10、animation  animation:xxx 0.2s linear alternate;
+只能用于元素的显示与隐藏瞬间，v-if不能完成消失时的动画
+需要给两个状态，一个状态控制是否加载这块组件（v-if），另一个控制动画的正反（class），
+也就是说这块组件加载了就不注销了
+
+11、for...of...
+for(let v of arr){}这里面可以使用return break continue 但是没办法拿到下标
+所以要在外面写一个let i=0，然后再for循环里面自家；
+需要注意的是  forEach也是无法跳出去的  而且还需要提前检查数组是否为空，for..of则不需要
+或者用这种方法：for (let [v, i] of new Map(arr.map((v, i) => [v, i]))) {}
+
+12、iview 下拉框显示隐藏  过度效果参考文件夹
+现在main.js里面引入css，然后就可以在页面上调用这个组件了
+
+13、滚动条样式：
+div::-webkit-scrollbar {
+    width: 6px;
+    height: 4px;
+}
+div::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,.2);
+    background: #5bcd78;
+}
+div::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,.2);
+    border-radius: 0;
+    background: #edeff1;
+    border-radius: 15px;
+}
+
+14、横向滚动条事件
+//必须用id ！！！！！！！！！！
+let outDiv = document.getElementById('scrollPhoto');
+        outDiv.onwheel = function(event){
+          //禁止事件默认行为（此处禁止鼠标滚轮行为关联到"屏幕滚动条上下移动"行为）
+          event.preventDefault();
+          //设置鼠标滚轮滚动时屏幕滚动条的移动步长
+          let step = 50;
+          if(event.deltaY < 0){
+            //向上滚动鼠标滚轮，屏幕滚动条左移
+            this.scrollLeft -= step;
+          } else {
+            //向下滚动鼠标滚轮，屏幕滚动条右移
+            this.scrollLeft += step;
+          }
+        }
+
+15、return：一般用于返回为无函数结果 
+    return false：一般用于阻止默认行为
+    return true：一般用于执行默认行为
+
+16、修饰符
+<!-- 即元素自身触发的事件先在此处处理，然后才交由内部元素进行处理 -->
+<div v-on:click.capture="doThis">...</div>
+<!-- 即事件不是从内部元素触发的 -->
+<div v-on:click.self="doThat">...</div>
+-----------vue 2.5.0新增的
+<!-- 有且只有 Ctrl 被按下的时候才触发 -->
+<button @click.ctrl.exact="onCtrlClick">A</button>
+
+17、更新模块包 npm install xxx@latest
+
+18、字符串补全功能：padStart从前里面，padEnd从尾部补全
+(xxx+'').padStart(5,'a')
+(xxx+'')是为了保证里面的一定是字符串，不然会报错，5是最小长度，a是补全的字符
+
+19、css强制换行：
+如果你连续的英文之间没用空格，那么它会以为是一个单词，就不会换行
+word-break: break-all;
+word-wrap: break-word;
+
+20、当修改元素显示与隐藏（v-if）状态的时候，想要拿到这个元素的某些值
+比如说滚动条高度，元素等等，就要等到元素已经渲染到dom上才行
+$this.nextTick(function(){xxx})，就是等到元素渲染的时候执行这段话
+
+21、vue获取ref
+ref属性写在组件标签上时，this.$ref.xxx拿到的是对应组件里面export返回的整个对象
+ref属性写在普通标签上时，this.$ref.xxx拿到的是对应标签的dom节点，类似于jq一样
+
+22、moment.js：
+moment(v).format("YYYY-MM-DD  HH:mm:ss")
+处理时间的轻量级插件，计算啊，加时间减时间等  不需要.getTime()了
+
+23、边框的阴影
+    box-shadow: 0 0px 6px rgb(249, 158, 73);
+
+24、轻量级的滑块组件
+nouislider 
+npm install nouislider --save
+需要在webpack.config.js里面配置一下插件
+import 'nouislider';
+var slider = document.getElementById('slider');
+ 
+noUiSlider.create(slider, {
+  start: 40,
+  connect: "lower",
+  range: {
+    min: 0,
+    max: 100
+  }
+});
+
+slider.on({
+	//滑动停止回调
+	set() {},
+	//滑动变化回调
+	slide() {
+	that.currentCode = parseInt(slider.val())
+      that.calcPercent() //计算百分比
+	}
+});
+
+25、textarea标签的改变事件
+@input=xxx()
+
+26、使用脚手架搭建项目
+vue init webpack-simple project-name   开发中起项目不需要预先编译
+
+27、nginx不能转发https开头的网站
+
+28、less放在main.js里面有时候是不能解析的
+必须在webpack里面配置less的编译器，在.vue外面的文件也可以解析less
+一般建议放在app.vue里面
+
+29、在webpack里面启动eslint  有可能会导致编译失败
+尽量不要使用eslint去打包项目
+
+30、分页的头上小木条
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0px;
+    width: 100%;
+    height: 3px;
+    background-color: #F53B4A;
+    z-index: 10;
+
+31、过渡效果的实现
+点击的时候 增加过渡效果 transition
+.css({'transition':'0.3s','left':-this.leftBank*278})// 用css去控制
+
+32、判断数组
+Array.isArray()   ie8不兼容
+
+33、改变input的焦点位置
+$('.rechargeInfo .rechargeInput')[0].setSelectionRange(index,index)
+
+34、iview兼容ie11  适用于iview3.01
+npm install --save-dev babel-polyfill
+webpack.config.js  里面要在entry.vendor添加babel-polyfill
+
+35、检查字符串出现的次数  a.split('x').length-1
+
+36、// input的全局样式 解决搜狗浏览器input自带的键盘
+input::-webkit-input-safebox-button{
+  display: none;
+}
+
+
+37、h5设置rem布局
+<script>
+    (function (doc, win) {
+      debugger
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          docEl.style.fontSize = (clientWidth > 750 ? 100 : 100 * (clientWidth / 750)) + 'px';
+        };
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+  </script>
+
+38、vue-cli3中设置全局less变量
+cmd运行: vue add style-resources-loader
+vue.config.js中写入：
+const path = require('path')
+module.exports = {
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'less',
+      patterns: [
+        path.resolve(__dirname, "src/css/global.less")// 全局样式目录
+      ]
+    }
+  }
+}
+
+

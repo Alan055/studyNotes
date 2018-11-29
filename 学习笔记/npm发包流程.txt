@@ -1,0 +1,12 @@
+先写组件 一个组件一个index.js
+
+
+
+
+
+
+npm login 
+npm publish --access=public
+
+
+npm version patch  版本号加1
