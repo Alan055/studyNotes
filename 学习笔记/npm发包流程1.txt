@@ -1,0 +1,24 @@
+﻿先写组件 一个组件一个index.js
+
+
+
+
+
+
+npm login 
+user：alan0555
+password：qq密码
+// 然后需要提交代码 不提交代码  不能用npm命令去让版本号加1 
+// 再打包项目
+npm version patch  版本号加1
+npm publish --access=public
+
+比如我想来个1.0.1版本，注意，是最后一位修改了增1，那么命令：npm version patch    回车就可以了；
+
+ 
+比如我想来个1.1.0版本，注意，是第二位修改了增1，那么命令：    npm version minor    回车就可以了；
+
+    
+比如我想来个2.0.0版本，注意，是第一位修改了增1，那么命令：    npm version major     
+
+
